@@ -1,41 +1,39 @@
 const router = require('express').Router();
 const conn = require('../config/mysql');
 
-router.get('/login', function(req, res) {
-  res.send('auth/login');
+// 친구 목록 조회하기
+router.get('/:userId/follow', function(req, res) {
+  
 });
 
-router.get('/logout', function(req, res) {
-  req.logout();
-  req.session.save(function() {
-    res.redirect('/welcome');
-  });
+// 친구 추가하기
+router.post('/:userId/follow', function(req, res) {
+  
 });
 
-router.get('/register', function(req, res) {
-  res.send('auth/register');
+// 유저 받은 메세지함 조회하기
+router.get('/:userId/receive', function(req, res) {
+  
 });
 
-router.post('/register', function(req, res) {
-  hasher({ password: req.body.password }, function(err, pass, salt, hash) {
-    const user = {
-      authId: req.body.username,
-      username: req.body.username,
-      password: hash,
-      salt: salt,
-      displayName: req.body.displayName,
-      provider: 'local'
-    };
-    const sql = 'INSERT INTO users SET ?';
-    conn.query(sql, user, function(err, results) {
-      if(err) {
-        console.log(err);
-        res.status(500);
-      } else {
-        res.redirect('/welcome');
-      }
-    });
-  });
+// 유저 보낸 메세지함 조회하기
+router.get('/:userId/send', function(req, res) {
+  
+});
+
+// 친구에게 메세지 보내기
+router.post('/:userId/message', function(req, res) {
+  
+});
+
+// push 알림 발생시 미수신 메세지 정보 가져오기
+router.get('/:userId/message', function(req, res) {
+  
+});
+
+// 유저 단일 메세지 조회하기
+router.get('/:userId/message/:messageId', function(req, res) {
+  
 });
 
 module.exports = router;
