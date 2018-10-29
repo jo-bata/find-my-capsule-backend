@@ -12,8 +12,23 @@ router.post('/:userId/follow', function(req, res) {
 });
 
 // 유저 받은 메세지함 조회하기
-router.get('/:userId/receive', function(req, res) {
-  
+router.get('/:userId/recieve', function(req, res) {
+  const sql = 'SELECT * FROM message WHERE reciever_uid = ? AND found = 1';
+  conn.query(sql, [req.params.userId], function(err, results, fields) {
+    if(err) throw err;
+  }, function(results) {
+    const data = results;
+    const sql = 'SELECT * FROM user WHERE uid = ?';
+    conn.query(sql, [], function(err, results, fields) {
+      if(err) throw err;
+    }, function(results) {
+      for(let i = 0; i < data.length; i++) {
+        delete data[i].reciever_uid;
+        data[i].sender_name = results;
+      }
+      res.send(data);
+    });
+  });
 });
 
 // 유저 보낸 메세지함 조회하기
